@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable() {
         movement.Enable();
-        movement.performed += OnMovement;
     }
 
     private void Update() {
@@ -42,9 +41,5 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = Vector2.ClampMagnitude(rb.velocity + newVelocity, maxVelocity);
         rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, 0.1f);
-    }
-
-    private void OnMovement(InputAction.CallbackContext context) {
-        Debug.Log("Movement: " + context.ReadValue<Vector2>());
     }
 }
