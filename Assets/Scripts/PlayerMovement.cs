@@ -35,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
         // }
         moveDirection = movement.ReadValue<Vector2>();
         newVelocity = moveDirection * movementSpeed;
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity + newVelocity, maxVelocity);
-        rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, 0.1f);
     }
 
     private void FixedUpdate() {
         // rb.velocity = newVelocity;
 
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity + newVelocity, maxVelocity);
+        rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, 0.1f);
     }
 
     private void OnMovement(InputAction.CallbackContext context) {
