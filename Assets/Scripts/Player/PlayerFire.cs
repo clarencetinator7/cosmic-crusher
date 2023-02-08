@@ -51,11 +51,12 @@ public class PlayerFire : MonoBehaviour
         newProjectile.transform.parent = null;
         Destroy(newProjectile, 5f);
         projectileRb.bodyType = RigidbodyType2D.Dynamic;
-        projectileRb.AddForce(firePoint.up * holdTime * 15f, ForceMode2D.Impulse);
+        float projectileSpeed = holdTime * 15f;
+        projectileRb.AddForce(firePoint.up * (Mathf.Max(projectileSpeed, 20f)), ForceMode2D.Impulse);
     }
 
     private void OnAttack(InputAction.CallbackContext context) {
-        if (context.started) {
+        if (context.performed) {
             holdStartTime = Time.time;
             isHolding = true;
             Debug.Log("Attack Hold");
@@ -63,7 +64,6 @@ public class PlayerFire : MonoBehaviour
             // add indicator of holding attack by instantiating a projectile
             newProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation);
             newProjectile.transform.parent = firePoint;
-
         }
         else if (context.canceled && isHolding) {
             holdTime = Time.time - holdStartTime;
@@ -75,7 +75,8 @@ public class PlayerFire : MonoBehaviour
             launchProjectile();
             
             // Add knockback to player
-            rb.AddForce(-transform.up * holdTime * 5f, ForceMode2D.Impulse);
+            // TODO: Adjust this to be based on the projectile speed
+            rb.AddForce(-transform.up * 300f, ForceMode2D.Impulse);
 
 
         }
