@@ -5,27 +5,34 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerInputAction inputActions;
-    private InputAction movement;
-    private InputAction fire;
     private Rigidbody2D rb;
 
-    [SerializeField]
-    private float movementSpeed = 1f;
-    [SerializeField]
-    private float maxVelocity = 5f;
-    [SerializeField]
-    private float acceleration = 0.1f;
-    private Vector2 moveDirection;
+    [Header("Movement Settings")]
+    private PlayerInputAction inputActions;
+    private InputAction movement;
     private Vector2 newVelocity;
-        
-    private bool isFiring = false;
+    [SerializeField] private float movementSpeed = 1f;
+    [SerializeField] private float maxVelocity = 5f;
+    [SerializeField] private Vector2 moveDirection;
+
+
+    // TODO: MOVE FIRE TO PLAYERFIRE SCRIPT
+
+    [Header("Weapon / Firing Settings")]
+    private InputAction fire;
+    private GameObject weaponSlot;
+    Weapon weaponScript;
+    Coroutine lastRoutine;
+    [SerializeField] private GameObject equippedWeapon;
+
+
 
     private void Awake() {
         inputActions = new PlayerInputAction();
         movement = inputActions.Player.Move;
         fire = inputActions.Player.Fire;
         rb = GetComponent<Rigidbody2D>();
+        weaponSlot = GameObject.Find("Weapon Slot");
     }
 
     private void OnEnable() {
@@ -33,21 +40,14 @@ public class PlayerMovement : MonoBehaviour
 
         fire = inputActions.Player.Fire;
         fire.Enable();
+        fire.started += OnAttack;
         fire.performed += OnAttack; 
         fire.canceled += OnAttack;
     }
 
     private void Update() {
         moveDirection = movement.ReadValue<Vector2>();
-        // newVelocity = moveDirection * movementSpeed;
-        if(!isFiring) {
-            newVelocity += moveDirection * movementSpeed;
-            maxVelocity = 7f;
-        } else {
-            // Slow down the player while charging the attack
-            newVelocity = moveDirection * 0.5f;
-            maxVelocity = 0.5f;
-        }
+        newVelocity = moveDirection * movementSpeed;
     }
 
     private void FixedUpdate() {
@@ -59,13 +59,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnAttack(InputAction.CallbackContext context) {
-
-        if(context.performed) {
-            isFiring = true;
+        equippedWeapon = weaponSlot.transform.GetChild(0).gameObject;        
+        if(context.performed && equippedWeapon != null) {
+            // Get the weapon slot child
+            weaponScript = equippedWeapon.GetComponent<Weapon>();
+            lastRoutine = StartCoroutine(weaponScript.shootCoroutine());
         } else if (context.canceled) {
-            isFiring = false;
-        }
-
+            StopCoroutine(lastRoutine);
+        } 
     }
 
 }
