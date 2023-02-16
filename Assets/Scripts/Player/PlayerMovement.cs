@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        rb.velocity = newVelocity;
+        // rb.velocity = newVelocity;
         // Limit the velocity of the player
         rb.velocity = Vector2.ClampMagnitude(rb.velocity + newVelocity, maxVelocity);
         // Slow down the player
