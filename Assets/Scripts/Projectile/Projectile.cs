@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private float projectileDamage = 10f;
+    private float projectileDamage;
 
     public void SetProjectileDamage(float damage) {
         projectileDamage = damage;
@@ -14,6 +14,13 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, 5f);
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.tag == "Enemy") {
+            other.gameObject.GetComponent<Enemy>().takeDamage(projectileDamage);
+            Destroy(gameObject);
+        }
     }
 
 }

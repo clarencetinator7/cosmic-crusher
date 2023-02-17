@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     [Header("Weapon Stats")]
     [SerializeField] private float fireRate = 0.2f;
     [SerializeField] private float projectileSpeed = 10f;
-    [SerializeField] private float projectileDamage = 10f;
+    [SerializeField] private float projectileDamage = 50f;
 
     public void Shoot() {
         GameObject newProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation);
