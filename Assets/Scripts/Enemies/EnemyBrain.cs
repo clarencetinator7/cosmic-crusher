@@ -45,7 +45,13 @@ public class EnemyBrain : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Shoot");
+
+        GameObject newProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation);
+        Debug.Log(newProjectile);
+        newProjectile.GetComponent<EnemyProjectile>().SetProjectileDamage(projectileDamage);
+        Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D>();
+        projectileRb.AddForce(firePoint.up * projectileSpeed, ForceMode2D.Impulse);
+
     }
 
 
