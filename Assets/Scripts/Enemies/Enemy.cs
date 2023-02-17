@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float hitPoints = 100f;
 
+
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Projectile") {
             Debug.Log("Enemy hit by projectile");
@@ -19,5 +20,6 @@ public class Enemy : MonoBehaviour
         if(hitPoints <= 0)
             Destroy(gameObject);
     }
+
 
 }
