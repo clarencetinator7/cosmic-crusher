@@ -25,14 +25,11 @@ public class EnemyBrain : MonoBehaviour
 
     void Update() {
        
+        lookAtPlayer();
+
         // Distance to player
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        // Direction to player
-        Vector2 directionToPlayer = (player.transform.position - transform.position).normalized;
-        // Angle to player
-        float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-        // Rotate towards player
-        transform.eulerAngles = new Vector3(0, 0, angleToPlayer - 90);
+
 
         if(distanceToPlayer < shootingRange) {
             // Shoot with fire rate
@@ -53,5 +50,15 @@ public class EnemyBrain : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, shootingRange);
     }
 
-    
+    void lookAtPlayer() {
+        // Direction to player
+        Vector2 directionToPlayer = (player.transform.position - transform.position).normalized;
+        // Angle to player
+        float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+        // Rotate towards player
+        Vector3 rotationData = new Vector3(0, 0, angleToPlayer - 90);
+        // Slow rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotationData), 0.1f); 
+    }
+ 
 }
