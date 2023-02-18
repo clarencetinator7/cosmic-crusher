@@ -8,16 +8,20 @@ public class EnemyBrain : MonoBehaviour
 
     [Header("Component References")]
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Enemy enemy;
 
     [Header("Enemy Stats")]
-    [SerializeField] private float shootingRange = 10f;
-    private float shootingRate = 3f;
+    private float movementSpeed;
+    private float shootingRange;
+    private float shootingRate; 
     private float nextShootTime = 0f;
-    [SerializeField] private float projectileSpeed = 10f;
-    [SerializeField] private float projectileDamage = 10f;
-    [SerializeField] private float movementSpeed = 3f;
+
+    void Start() {
+        enemy = GetComponent<Enemy>();
+        movementSpeed = enemy.getMovementSpeed();
+        shootingRange = enemy.getShootRange();
+        shootingRate = enemy.getFireRate();
+    }
 
     void Update() {
        
@@ -34,7 +38,7 @@ public class EnemyBrain : MonoBehaviour
             // Shoot with fire rate
             if(Time.time > nextShootTime) {
                 nextShootTime = Time.time + shootingRate;
-                Shoot();
+                enemy.Shoot();
             }
         } else {
             // Move towards player
@@ -42,18 +46,6 @@ public class EnemyBrain : MonoBehaviour
         }
 
     }
-
-    private void Shoot()
-    {
-
-        GameObject newProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation);
-        Debug.Log(newProjectile);
-        newProjectile.GetComponent<EnemyProjectile>().SetProjectileDamage(projectileDamage);
-        Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D>();
-        projectileRb.AddForce(firePoint.up * projectileSpeed, ForceMode2D.Impulse);
-
-    }
-
 
     void OnDrawGizmos() {
         // Draw a yellow sphere at the transform's position

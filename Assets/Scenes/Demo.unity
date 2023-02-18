@@ -442,7 +442,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fc257390c96c946aca018e6d6d254d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 100
+  enemySO: {fileID: 11400000, guid: f3bd0a8884a200243bba182b29ed36bf, type: 2}
+  firePoint: {fileID: 1160870340}
+  projectileSpeed: 15
 --- !u!114 &1087444262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,12 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1984356506}
-  projectile: {fileID: 8164571652345909445, guid: 3c63ee87c80ec6f4797280002677a02b, type: 3}
-  firePoint: {fileID: 1160870340}
-  shootingRange: 10
-  projectileSpeed: 10
-  projectileDamage: 10
-  movementSpeed: 3
+  enemy: {fileID: 1087444261}
 --- !u!1 &1160870339
 GameObject:
   m_ObjectHideFlags: 0
