@@ -19,8 +19,8 @@ public class Weapon : MonoBehaviour
         GameObject newProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation);
         newProjectile.GetComponent<Projectile>().SetProjectileDamage(projectileDamage);
         Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D>();
-        projectileRb.AddForce(firePoint.up * projectileSpeed, ForceMode2D.Impulse);
-
+        // projectileRb.AddForce(firePoint.up * projectileSpeed, ForceMode2D.Impulse);
+        projectileRb.velocity = firePoint.up * projectileSpeed;
     }
 
     public IEnumerator shootCoroutine(){

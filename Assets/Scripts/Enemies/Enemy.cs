@@ -58,7 +58,8 @@ public class Enemy : MonoBehaviour
         Debug.Log(newProjectile);
         newProjectile.GetComponent<EnemyProjectile>().SetProjectileDamage(damage);
         Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D>();
-        projectileRb.AddForce(firePoint.up * projectileSpeed, ForceMode2D.Impulse);
+        // projectileRb.AddForce(firePoint.up * projectileSpeed, ForceMode2D.Impulse);
+        projectileRb.velocity = firePoint.up * projectileSpeed;
     }
 
 

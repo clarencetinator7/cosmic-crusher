@@ -16,9 +16,11 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, 5f);
     }
 
-    void OnCollisionEnter2D(Collision2D other) {
+    void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Enemy") {
             other.gameObject.GetComponent<Enemy>().takeDamage(projectileDamage);
+            Destroy(gameObject);
+        } else if(other.gameObject.tag == "Wall") {
             Destroy(gameObject);
         }
     }
