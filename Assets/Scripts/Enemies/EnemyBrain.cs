@@ -18,6 +18,7 @@ public class EnemyBrain : MonoBehaviour
 
     void Start() {
         enemy = GetComponent<Enemy>();
+        player = GameObject.Find("Player Ship");
         movementSpeed = enemy.getMovementSpeed();
         shootingRange = enemy.getShootRange();
         shootingRate = enemy.getFireRate();
